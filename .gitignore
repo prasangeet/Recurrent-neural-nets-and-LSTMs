@@ -1,0 +1,81 @@
+"""
+Ignore Python cache and compiled files
+"""
+__pycache__/
+*.py[cod]
+*$py.class
+
+"""
+Ignore virtual environments
+"""
+.venv/
+venv/
+env/
+ENV/
+
+"""
+Ignore system files
+"""
+.DS_Store
+Thumbs.db
+
+"""
+Keep logs (DO NOT ignore logs/)
+"""
+# logs/
+# *.log
+
+"""
+Ignore model checkpoints
+"""
+models/
+*.pt
+*.pth
+
+"""
+Ignore dataset files (optional)
+Uncomment if dataset is large
+"""
+# data/
+# *.txt
+
+"""
+Ignore Jupyter notebook checkpoints
+"""
+.ipynb_checkpoints/
+
+"""
+Ignore IDE/editor configs
+"""
+.vscode/
+.idea/
+
+"""
+Ignore build files
+"""
+build/
+dist/
+*.egg-info/
+
+"""
+Ignore temporary files
+"""
+*.swp
+*.swo
+*~
+
+"""
+Ignore coverage reports
+"""
+.coverage
+htmlcov/
+
+"""
+Ignore environment variables
+"""
+.env
+
+"""
+Optional: ignore generated vocab
+"""
+vocab.json

@@ -1,0 +1,188 @@
+2026-03-18 16:15:13,367 | INFO | Starting training pipeline
+2026-03-18 16:15:13,368 | INFO | TRAINING: Vanilla RNN
+2026-03-18 16:15:13,516 | INFO | Loaded the Data
+2026-03-18 16:15:13,516 | INFO | Built the Vocabulary
+2026-03-18 16:15:13,518 | INFO | Encoded the outputs and the inputs
+2026-03-18 16:15:13,518 | INFO | Saved the vocabulary file, with char2idx and idx2char
+2026-03-18 16:15:13,523 | INFO | Dataset Split -> Train: 800 | Val: 200
+2026-03-18 16:15:13,523 | INFO | Vocabulary size: 25
+2026-03-18 16:15:15,024 | INFO | Initialized model: rnn
+2026-03-18 16:15:15,369 | INFO | Epoch 1/30 | Train Loss: 2.1523 | Val Loss: 1.8638
+2026-03-18 16:15:15,513 | INFO | Epoch 2/30 | Train Loss: 1.6606 | Val Loss: 1.5959
+2026-03-18 16:15:15,652 | INFO | Epoch 3/30 | Train Loss: 1.4346 | Val Loss: 1.4761
+2026-03-18 16:15:15,801 | INFO | Epoch 4/30 | Train Loss: 1.2616 | Val Loss: 1.2871
+2026-03-18 16:15:15,945 | INFO | Epoch 5/30 | Train Loss: 1.1378 | Val Loss: 1.1953
+2026-03-18 16:15:16,078 | INFO | Epoch 6/30 | Train Loss: 1.0623 | Val Loss: 1.1938
+2026-03-18 16:15:16,205 | INFO | Epoch 7/30 | Train Loss: 0.9988 | Val Loss: 1.1205
+2026-03-18 16:15:16,332 | INFO | Epoch 8/30 | Train Loss: 0.9523 | Val Loss: 1.0786
+2026-03-18 16:15:16,466 | INFO | Epoch 9/30 | Train Loss: 0.9139 | Val Loss: 1.0571
+2026-03-18 16:15:16,608 | INFO | Epoch 10/30 | Train Loss: 0.8909 | Val Loss: 1.0429
+2026-03-18 16:15:16,748 | INFO | Epoch 11/30 | Train Loss: 0.8784 | Val Loss: 1.0495
+2026-03-18 16:15:16,891 | INFO | Epoch 12/30 | Train Loss: 0.8653 | Val Loss: 1.0560
+2026-03-18 16:15:17,033 | INFO | Epoch 13/30 | Train Loss: 0.8549 | Val Loss: 1.0448
+2026-03-18 16:15:17,175 | INFO | Epoch 14/30 | Train Loss: 0.8512 | Val Loss: 1.0263
+2026-03-18 16:15:17,326 | INFO | Epoch 15/30 | Train Loss: 0.8478 | Val Loss: 1.0309
+2026-03-18 16:15:17,470 | INFO | Epoch 16/30 | Train Loss: 0.8328 | Val Loss: 1.0177
+2026-03-18 16:15:17,613 | INFO | Epoch 17/30 | Train Loss: 0.8312 | Val Loss: 1.0509
+2026-03-18 16:15:17,752 | INFO | Epoch 18/30 | Train Loss: 0.8302 | Val Loss: 1.0138
+2026-03-18 16:15:17,893 | INFO | Epoch 19/30 | Train Loss: 0.8194 | Val Loss: 1.0386
+2026-03-18 16:15:18,030 | INFO | Epoch 20/30 | Train Loss: 0.8130 | Val Loss: 1.0507
+2026-03-18 16:15:18,170 | INFO | Epoch 21/30 | Train Loss: 0.8142 | Val Loss: 1.0479
+2026-03-18 16:15:18,310 | INFO | Epoch 22/30 | Train Loss: 0.8106 | Val Loss: 1.0438
+2026-03-18 16:15:18,453 | INFO | Epoch 23/30 | Train Loss: 0.8144 | Val Loss: 1.0268
+2026-03-18 16:15:18,592 | INFO | Epoch 24/30 | Train Loss: 0.8081 | Val Loss: 1.0477
+2026-03-18 16:15:18,731 | INFO | Epoch 25/30 | Train Loss: 0.8127 | Val Loss: 1.0354
+2026-03-18 16:15:18,873 | INFO | Epoch 26/30 | Train Loss: 0.8133 | Val Loss: 1.0424
+2026-03-18 16:15:19,016 | INFO | Epoch 27/30 | Train Loss: 0.8094 | Val Loss: 1.0694
+2026-03-18 16:15:19,156 | INFO | Epoch 28/30 | Train Loss: 0.8151 | Val Loss: 1.0501
+2026-03-18 16:15:19,294 | INFO | Epoch 29/30 | Train Loss: 0.8132 | Val Loss: 1.0596
+2026-03-18 16:15:19,434 | INFO | Epoch 30/30 | Train Loss: 0.8111 | Val Loss: 1.0500
+2026-03-18 16:15:19,439 | INFO | Full model saved to: models/model_rnn_2026-03-18_16-15-13.pt
+2026-03-18 16:15:19,440 | INFO | Vanilla RNN training finished
+2026-03-18 16:15:19,440 | INFO | Starting evaluation
+2026-03-18 16:15:22,066 | INFO | Generated names: 1000
+2026-03-18 16:15:22,066 | INFO | Unique names: 985
+2026-03-18 16:15:22,066 | INFO | Novelty Rate: 1.0000
+2026-03-18 16:15:22,066 | INFO | Diversity: 0.9850
+2026-03-18 16:15:22,066 | INFO | Sample generated names:
+2026-03-18 16:15:22,067 | INFO | arungankanitetetek
+2026-03-18 16:15:22,067 | INFO | deteprangangandete
+2026-03-18 16:15:22,067 | INFO | viteteshangankanes
+2026-03-18 16:15:22,067 | INFO | anitetenanititetit
+2026-03-18 16:15:22,067 | INFO | pranetiteteteekanu
+2026-03-18 16:15:22,067 | INFO | kaniteteteeteshang
+2026-03-18 16:15:22,067 | INFO | anitanititeteteka
+2026-03-18 16:15:22,067 | INFO | shanitekanitetekan
+2026-03-18 16:15:22,067 | INFO | sanetanshanititani
+2026-03-18 16:15:22,067 | INFO | deteteshaneetekuni
+2026-03-18 16:15:22,067 | INFO | 
+--------------------------------------
+
+2026-03-18 16:15:22,067 | INFO | 
+--------------------------------------
+
+2026-03-18 16:15:22,067 | INFO | TRAINING: BiLSTM
+2026-03-18 16:15:22,068 | INFO | Loaded the Data
+2026-03-18 16:15:22,068 | INFO | Built the Vocabulary
+2026-03-18 16:15:22,071 | INFO | Encoded the outputs and the inputs
+2026-03-18 16:15:22,071 | INFO | Saved the vocabulary file, with char2idx and idx2char
+2026-03-18 16:15:22,071 | INFO | Dataset Split -> Train: 800 | Val: 200
+2026-03-18 16:15:22,072 | INFO | Vocabulary size: 25
+2026-03-18 16:15:22,074 | INFO | Initialized model: blstm
+2026-03-18 16:15:22,719 | INFO | Epoch 1/30 | Train Loss: 1.3970 | Val Loss: 0.3137
+2026-03-18 16:15:23,339 | INFO | Epoch 2/30 | Train Loss: 0.1099 | Val Loss: 0.0293
+2026-03-18 16:15:23,964 | INFO | Epoch 3/30 | Train Loss: 0.0116 | Val Loss: 0.0098
+2026-03-18 16:15:24,602 | INFO | Epoch 4/30 | Train Loss: 0.0042 | Val Loss: 0.0069
+2026-03-18 16:15:25,269 | INFO | Epoch 5/30 | Train Loss: 0.0026 | Val Loss: 0.0059
+2026-03-18 16:15:25,925 | INFO | Epoch 6/30 | Train Loss: 0.0020 | Val Loss: 0.0052
+2026-03-18 16:15:26,580 | INFO | Epoch 7/30 | Train Loss: 0.0016 | Val Loss: 0.0048
+2026-03-18 16:15:27,239 | INFO | Epoch 8/30 | Train Loss: 0.0013 | Val Loss: 0.0044
+2026-03-18 16:15:27,890 | INFO | Epoch 9/30 | Train Loss: 0.0011 | Val Loss: 0.0042
+2026-03-18 16:15:28,550 | INFO | Epoch 10/30 | Train Loss: 0.0009 | Val Loss: 0.0040
+2026-03-18 16:15:29,209 | INFO | Epoch 11/30 | Train Loss: 0.0008 | Val Loss: 0.0038
+2026-03-18 16:15:29,868 | INFO | Epoch 12/30 | Train Loss: 0.0007 | Val Loss: 0.0037
+2026-03-18 16:15:30,525 | INFO | Epoch 13/30 | Train Loss: 0.0006 | Val Loss: 0.0035
+2026-03-18 16:15:31,184 | INFO | Epoch 14/30 | Train Loss: 0.0006 | Val Loss: 0.0034
+2026-03-18 16:15:31,828 | INFO | Epoch 15/30 | Train Loss: 0.0005 | Val Loss: 0.0034
+2026-03-18 16:15:32,482 | INFO | Epoch 16/30 | Train Loss: 0.0004 | Val Loss: 0.0033
+2026-03-18 16:15:33,140 | INFO | Epoch 17/30 | Train Loss: 0.0004 | Val Loss: 0.0032
+2026-03-18 16:15:33,797 | INFO | Epoch 18/30 | Train Loss: 0.0004 | Val Loss: 0.0031
+2026-03-18 16:15:34,454 | INFO | Epoch 19/30 | Train Loss: 0.0003 | Val Loss: 0.0031
+2026-03-18 16:15:35,147 | INFO | Epoch 20/30 | Train Loss: 0.0003 | Val Loss: 0.0030
+2026-03-18 16:15:35,817 | INFO | Epoch 21/30 | Train Loss: 0.0003 | Val Loss: 0.0030
+2026-03-18 16:15:36,485 | INFO | Epoch 22/30 | Train Loss: 0.0003 | Val Loss: 0.0029
+2026-03-18 16:15:37,152 | INFO | Epoch 23/30 | Train Loss: 0.0002 | Val Loss: 0.0029
+2026-03-18 16:15:37,801 | INFO | Epoch 24/30 | Train Loss: 0.0002 | Val Loss: 0.0029
+2026-03-18 16:15:38,458 | INFO | Epoch 25/30 | Train Loss: 0.0002 | Val Loss: 0.0028
+2026-03-18 16:15:39,110 | INFO | Epoch 26/30 | Train Loss: 0.0002 | Val Loss: 0.0028
+2026-03-18 16:15:39,771 | INFO | Epoch 27/30 | Train Loss: 0.0002 | Val Loss: 0.0028
+2026-03-18 16:15:40,437 | INFO | Epoch 28/30 | Train Loss: 0.0002 | Val Loss: 0.0027
+2026-03-18 16:15:41,064 | INFO | Epoch 29/30 | Train Loss: 0.0002 | Val Loss: 0.0027
+2026-03-18 16:15:41,680 | INFO | Epoch 30/30 | Train Loss: 0.0002 | Val Loss: 0.0027
+2026-03-18 16:15:41,686 | INFO | Full model saved to: models/model_blstm_2026-03-18_16-15-13.pt
+2026-03-18 16:15:41,687 | INFO | BiLSTM training finished
+2026-03-18 16:15:41,687 | INFO | Starting evaluation
+2026-03-18 16:15:45,384 | INFO | Generated names: 1000
+2026-03-18 16:15:45,384 | INFO | Unique names: 947
+2026-03-18 16:15:45,384 | INFO | Novelty Rate: 0.9980
+2026-03-18 16:15:45,384 | INFO | Diversity: 0.9470
+2026-03-18 16:15:45,384 | INFO | Sample generated names:
+2026-03-18 16:15:45,384 | INFO | annushaloolallomoo
+2026-03-18 16:15:45,385 | INFO | ananultttteshnantu
+2026-03-18 16:15:45,385 | INFO | anaankhunkkrulonul
+2026-03-18 16:15:45,385 | INFO | ananepalooh
+2026-03-18 16:15:45,385 | INFO | atrmala
+2026-03-18 16:15:45,385 | INFO | kalkunkka
+2026-03-18 16:15:45,385 | INFO | nikkkrakkkkaralkkk
+2026-03-18 16:15:45,385 | INFO | nittttttilmmita
+2026-03-18 16:15:45,385 | INFO | ralal
+2026-03-18 16:15:45,385 | INFO | alllkkkanuubittri
+2026-03-18 16:15:45,385 | INFO | 
+--------------------------------------
+
+2026-03-18 16:15:45,385 | INFO | 
+--------------------------------------
+
+2026-03-18 16:15:45,385 | INFO | TRAINING: Attention RNN
+2026-03-18 16:15:45,386 | INFO | Loaded the Data
+2026-03-18 16:15:45,386 | INFO | Built the Vocabulary
+2026-03-18 16:15:45,387 | INFO | Encoded the outputs and the inputs
+2026-03-18 16:15:45,387 | INFO | Saved the vocabulary file, with char2idx and idx2char
+2026-03-18 16:15:45,388 | INFO | Dataset Split -> Train: 800 | Val: 200
+2026-03-18 16:15:45,388 | INFO | Vocabulary size: 25
+2026-03-18 16:15:45,388 | INFO | Initialized model: attention
+2026-03-18 16:15:45,656 | INFO | Epoch 1/30 | Train Loss: 2.1910 | Val Loss: 1.9213
+2026-03-18 16:15:45,914 | INFO | Epoch 2/30 | Train Loss: 1.7150 | Val Loss: 1.5948
+2026-03-18 16:15:46,174 | INFO | Epoch 3/30 | Train Loss: 1.4791 | Val Loss: 1.4102
+2026-03-18 16:15:46,413 | INFO | Epoch 4/30 | Train Loss: 1.2970 | Val Loss: 1.3212
+2026-03-18 16:15:46,659 | INFO | Epoch 5/30 | Train Loss: 1.1722 | Val Loss: 1.1760
+2026-03-18 16:15:46,918 | INFO | Epoch 6/30 | Train Loss: 1.0852 | Val Loss: 1.1196
+2026-03-18 16:15:47,175 | INFO | Epoch 7/30 | Train Loss: 1.0233 | Val Loss: 1.1064
+2026-03-18 16:15:47,424 | INFO | Epoch 8/30 | Train Loss: 0.9793 | Val Loss: 1.1147
+2026-03-18 16:15:47,676 | INFO | Epoch 9/30 | Train Loss: 0.9552 | Val Loss: 1.0855
+2026-03-18 16:15:47,927 | INFO | Epoch 10/30 | Train Loss: 0.9221 | Val Loss: 1.0601
+2026-03-18 16:15:48,174 | INFO | Epoch 11/30 | Train Loss: 0.9232 | Val Loss: 1.0546
+2026-03-18 16:15:48,422 | INFO | Epoch 12/30 | Train Loss: 0.9174 | Val Loss: 1.0560
+2026-03-18 16:15:48,666 | INFO | Epoch 13/30 | Train Loss: 0.8874 | Val Loss: 1.0262
+2026-03-18 16:15:48,916 | INFO | Epoch 14/30 | Train Loss: 0.8878 | Val Loss: 1.0241
+2026-03-18 16:15:49,162 | INFO | Epoch 15/30 | Train Loss: 0.8833 | Val Loss: 1.0334
+2026-03-18 16:15:49,408 | INFO | Epoch 16/30 | Train Loss: 0.8880 | Val Loss: 1.0770
+2026-03-18 16:15:49,659 | INFO | Epoch 17/30 | Train Loss: 0.8939 | Val Loss: 1.0489
+2026-03-18 16:15:49,941 | INFO | Epoch 18/30 | Train Loss: 0.8664 | Val Loss: 1.0664
+2026-03-18 16:15:50,200 | INFO | Epoch 19/30 | Train Loss: 0.8693 | Val Loss: 1.0387
+2026-03-18 16:15:50,449 | INFO | Epoch 20/30 | Train Loss: 0.8684 | Val Loss: 1.0899
+2026-03-18 16:15:50,697 | INFO | Epoch 21/30 | Train Loss: 0.8681 | Val Loss: 1.0632
+2026-03-18 16:15:50,955 | INFO | Epoch 22/30 | Train Loss: 0.8607 | Val Loss: 1.0822
+2026-03-18 16:15:51,208 | INFO | Epoch 23/30 | Train Loss: 0.8613 | Val Loss: 1.0805
+2026-03-18 16:15:51,462 | INFO | Epoch 24/30 | Train Loss: 0.8671 | Val Loss: 1.0702
+2026-03-18 16:15:51,703 | INFO | Epoch 25/30 | Train Loss: 0.8554 | Val Loss: 1.0907
+2026-03-18 16:15:51,959 | INFO | Epoch 26/30 | Train Loss: 0.8559 | Val Loss: 1.0566
+2026-03-18 16:15:52,213 | INFO | Epoch 27/30 | Train Loss: 0.8473 | Val Loss: 1.0637
+2026-03-18 16:15:52,461 | INFO | Epoch 28/30 | Train Loss: 0.8361 | Val Loss: 1.1044
+2026-03-18 16:15:52,713 | INFO | Epoch 29/30 | Train Loss: 0.8381 | Val Loss: 1.1093
+2026-03-18 16:15:52,958 | INFO | Epoch 30/30 | Train Loss: 0.8446 | Val Loss: 1.0788
+2026-03-18 16:15:52,962 | INFO | Full model saved to: models/model_attention_2026-03-18_16-15-13.pt
+2026-03-18 16:15:52,963 | INFO | Attention RNN training finished
+2026-03-18 16:15:52,963 | INFO | Starting evaluation
+2026-03-18 16:15:55,444 | INFO | Generated names: 1000
+2026-03-18 16:15:55,444 | INFO | Unique names: 948
+2026-03-18 16:15:55,444 | INFO | Novelty Rate: 1.0000
+2026-03-18 16:15:55,444 | INFO | Diversity: 0.9480
+2026-03-18 16:15:55,444 | INFO | Sample generated names:
+2026-03-18 16:15:55,444 | INFO | andhiteteteeetete
+2026-03-18 16:15:55,444 | INFO | ranititeteshitetes
+2026-03-18 16:15:55,444 | INFO | sankshitetu
+2026-03-18 16:15:55,444 | INFO | saniteghitetu
+2026-03-18 16:15:55,444 | INFO | pranetetetetetetet
+2026-03-18 16:15:55,444 | INFO | pranitet
+2026-03-18 16:15:55,444 | INFO | aneteturaneshitetm
+2026-03-18 16:15:55,444 | INFO | anitetetitetitite
+2026-03-18 16:15:55,444 | INFO | anghiteteshititet
+2026-03-18 16:15:55,444 | INFO | praniteteteghitete
+2026-03-18 16:15:55,444 | INFO | 
+--------------------------------------
+
+2026-03-18 16:15:55,445 | INFO | 
+--------------------------------------
+
+2026-03-18 16:15:55,445 | INFO | All models trained and evaluated successfully
