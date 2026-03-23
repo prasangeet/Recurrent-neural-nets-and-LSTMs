@@ -1,29 +1,33 @@
 import torch
-import torch.nn as nn 
+import torch.nn as nn
 from model_classes.base_model import BaseSequenceModel
 
 
 class BLSTM(BaseSequenceModel):
-
     """
-    Bidirectional LSTM implemented from scratch.
+    Bidirectional LSTM implemented from scratch, with support for
+    stacked layers and dropout between them.
 
-    It processes the sequence in both forward and backward directions
-    and combines the hidden states from both directions.
+    Each layer processes the sequence in both directions. The forward
+    and backward hidden states are concatenated before being passed
+    up to the next layer.
     """
 
-    def __init__(self, vocab_size, embed_size=64, hidden_size=128) -> None:
+    def __init__(self, vocab_size, embed_size=64, hidden_size=128, num_layers=1, dropout=0.0):
         """
         Initialize model parameters.
 
         Args:
             vocab_size: number of tokens
             embed_size: size of embeddings
-            hidden_size: size of hidden state
+            hidden_size: size of hidden state per direction
+            num_layers: number of stacked BiLSTM layers
+            dropout: dropout probability applied between layers
         """
         super().__init__()
 
         self.hidden_size = hidden_size
+        self.num_layers = num_layers
 
         """
         Embedding layer to convert token indices to vectors.
@@ -31,69 +35,65 @@ class BLSTM(BaseSequenceModel):
         self.embeddings = nn.Embedding(vocab_size, embed_size)
 
         """
-        Forward LSTM parameters.
+        Each layer has its own set of forward and backward LSTM weights.
+        The first layer takes embed_size as input.
+        Subsequent layers take hidden_size * 2 (concatenated forward + backward).
         """
-        self.Wxi = nn.Parameter(torch.randn(embed_size, hidden_size) * 0.01)
-        self.Whi = nn.Parameter(torch.randn(hidden_size, hidden_size) * 0.01)
-        self.bi = nn.Parameter(torch.zeros(hidden_size))
+        self.fwd_params = nn.ModuleList()
+        self.bwd_params = nn.ModuleList()
 
-        self.Wxf = nn.Parameter(torch.randn(embed_size, hidden_size) * 0.01)
-        self.Whf = nn.Parameter(torch.randn(hidden_size, hidden_size) * 0.01)
-        self.bf = nn.Parameter(torch.zeros(hidden_size))
-
-        self.Wxo = nn.Parameter(torch.randn(embed_size, hidden_size) * 0.01)
-        self.Who = nn.Parameter(torch.randn(hidden_size, hidden_size) * 0.01)
-        self.bo = nn.Parameter(torch.zeros(hidden_size))
-
-        self.Wxg = nn.Parameter(torch.randn(embed_size, hidden_size) * 0.01)
-        self.Whg = nn.Parameter(torch.randn(hidden_size, hidden_size) * 0.01)
-        self.bg = nn.Parameter(torch.zeros(hidden_size))
+        for layer in range(num_layers):
+            input_size = embed_size if layer == 0 else hidden_size * 2
+            self.fwd_params.append(self._make_lstm_params(input_size, hidden_size))
+            self.bwd_params.append(self._make_lstm_params(input_size, hidden_size))
 
         """
-        Backward LSTM parameters.
+        Dropout applied between layers.
         """
-        self.Wxi_b = nn.Parameter(torch.randn(embed_size, hidden_size) * 0.01)
-        self.Whi_b = nn.Parameter(torch.randn(hidden_size, hidden_size) * 0.01)
-        self.bi_b = nn.Parameter(torch.zeros(hidden_size))
-
-        self.Wxf_b = nn.Parameter(torch.randn(embed_size, hidden_size) * 0.01)
-        self.Whf_b = nn.Parameter(torch.randn(hidden_size, hidden_size) * 0.01)
-        self.bf_b = nn.Parameter(torch.zeros(hidden_size))
-
-        self.Wxo_b = nn.Parameter(torch.randn(embed_size, hidden_size) * 0.01)
-        self.Who_b = nn.Parameter(torch.randn(hidden_size, hidden_size) * 0.01)
-        self.bo_b = nn.Parameter(torch.zeros(hidden_size))
-
-        self.Wxg_b = nn.Parameter(torch.randn(embed_size, hidden_size) * 0.01)
-        self.Whg_b = nn.Parameter(torch.randn(hidden_size, hidden_size) * 0.01)
-        self.bg_b = nn.Parameter(torch.zeros(hidden_size))
+        self.dropout = nn.Dropout(p=dropout)
 
         """
-        Final layer to map concatenated hidden states to logits.
+        Final layer maps the top layer's concatenated hidden states to logits.
         """
         self.fc = nn.Linear(hidden_size * 2, vocab_size)
 
-    def lstm_step(self, xt, h, c,
-                  Wx_i, Wh_i, b_i,
-                  Wx_f, Wh_f, b_f,
-                  Wx_o, Wh_o, b_o,
-                  Wx_g, Wh_g, b_g):
+    def _make_lstm_params(self, input_size, hidden_size):
         """
-        Single LSTM step.
+        Creates a single LSTM cell's worth of parameters as a ModuleDict.
+        Doing this per layer keeps the parameter lists clean and indexable.
+        """
+        return nn.ParameterDict({
+            "Wxi": nn.Parameter(torch.randn(input_size, hidden_size) * 0.01),
+            "Whi": nn.Parameter(torch.randn(hidden_size, hidden_size) * 0.01),
+            "bi":  nn.Parameter(torch.zeros(hidden_size)),
+            "Wxf": nn.Parameter(torch.randn(input_size, hidden_size) * 0.01),
+            "Whf": nn.Parameter(torch.randn(hidden_size, hidden_size) * 0.01),
+            "bf":  nn.Parameter(torch.zeros(hidden_size)),
+            "Wxo": nn.Parameter(torch.randn(input_size, hidden_size) * 0.01),
+            "Who": nn.Parameter(torch.randn(hidden_size, hidden_size) * 0.01),
+            "bo":  nn.Parameter(torch.zeros(hidden_size)),
+            "Wxg": nn.Parameter(torch.randn(input_size, hidden_size) * 0.01),
+            "Whg": nn.Parameter(torch.randn(hidden_size, hidden_size) * 0.01),
+            "bg":  nn.Parameter(torch.zeros(hidden_size)),
+        })
+
+    def lstm_step(self, xt, h, c, p):
+        """
+        Single LSTM step using a ParameterDict.
 
         Args:
-            xt: input at timestep
+            xt: input at this timestep
             h: previous hidden state
             c: previous cell state
+            p: ParameterDict for this direction and layer
 
         Returns:
             updated hidden state and cell state
         """
-
-        i = torch.sigmoid(xt @ Wx_i + h @ Wh_i + b_i)
-        f = torch.sigmoid(xt @ Wx_f + h @ Wh_f + b_f)
-        o = torch.sigmoid(xt @ Wx_o + h @ Wh_o + b_o)
-        g = torch.tanh(xt @ Wx_g + h @ Wh_g + b_g)
+        i = torch.sigmoid(xt @ p["Wxi"] + h @ p["Whi"] + p["bi"])
+        f = torch.sigmoid(xt @ p["Wxf"] + h @ p["Whf"] + p["bf"])
+        o = torch.sigmoid(xt @ p["Wxo"] + h @ p["Who"] + p["bo"])
+        g = torch.tanh(xt @ p["Wxg"] + h @ p["Whg"] + p["bg"])
 
         c = f * c + i * g
         h = o * torch.tanh(c)
@@ -102,87 +102,76 @@ class BLSTM(BaseSequenceModel):
 
     def forward(self, x, hidden=None):
         """
-        Forward pass through BiLSTM.
+        Forward pass through the stacked BiLSTM.
 
         Args:
             x: input tensor (batch_size, seq_len)
 
         Returns:
             logits: (batch_size, seq_len, vocab_size)
+            None: no single hidden state to return for a bidirectional model
         """
-
         batch_size, seq_len = x.shape
 
         """
         Convert input indices to embeddings.
         """
-        x = self.embeddings(x)
+        layer_input = self.embeddings(x)
 
         """
-        Initialize forward and backward hidden and cell states.
+        Run through each stacked layer.
         """
-        hf = torch.zeros(batch_size, self.hidden_size, device=x.device)
-        cf = torch.zeros(batch_size, self.hidden_size, device=x.device)
+        for layer in range(self.num_layers):
 
-        hb = torch.zeros(batch_size, self.hidden_size, device=x.device)
-        cb = torch.zeros(batch_size, self.hidden_size, device=x.device)
+            hf = torch.zeros(batch_size, self.hidden_size, device=x.device)
+            cf = torch.zeros(batch_size, self.hidden_size, device=x.device)
+            hb = torch.zeros(batch_size, self.hidden_size, device=x.device)
+            cb = torch.zeros(batch_size, self.hidden_size, device=x.device)
 
-        forward_states = []
-        backward_states = []
+            forward_states = []
+            backward_states = []
 
-        """
-        Forward pass through sequence.
-        """
-        for t in range(seq_len):
+            """
+            Forward pass through the sequence for this layer.
+            """
+            for t in range(seq_len):
+                xt = layer_input[:, t, :]
+                hf, cf = self.lstm_step(xt, hf, cf, self.fwd_params[layer])
+                forward_states.append(hf)
 
-            xt = x[:, t, :]
+            """
+            Backward pass through the sequence for this layer.
+            """
+            for t in reversed(range(seq_len)):
+                xt = layer_input[:, t, :]
+                hb, cb = self.lstm_step(xt, hb, cb, self.bwd_params[layer])
+                backward_states.append(hb)
 
-            hf, cf = self.lstm_step(
-                xt, hf, cf,
-                self.Wxi, self.Whi, self.bi,
-                self.Wxf, self.Whf, self.bf,
-                self.Wxo, self.Who, self.bo,
-                self.Wxg, self.Whg, self.bg
+            """
+            Reverse backward states so they line up with forward states by timestep.
+            """
+            backward_states.reverse()
+
+            """
+            Concatenate forward and backward states at each timestep.
+            This becomes the input to the next layer (or the final output).
+            """
+            combined = torch.stack(
+                [torch.cat([f, b], dim=1) for f, b in zip(forward_states, backward_states)],
+                dim=1
             )
 
-            forward_states.append(hf)
+            """
+            Apply dropout between layers but leave the top layer's output clean.
+            """
+            if layer < self.num_layers - 1:
+                layer_input = self.dropout(combined)
+            else:
+                layer_input = combined
 
         """
-        Backward pass through sequence.
+        Project each timestep's combined hidden state to vocabulary logits.
         """
-        for t in reversed(range(seq_len)):
-
-            xt = x[:, t, :]
-
-            hb, cb = self.lstm_step(
-                xt, hb, cb,
-                self.Wxi_b, self.Whi_b, self.bi_b,
-                self.Wxf_b, self.Whf_b, self.bf_b,
-                self.Wxo_b, self.Who_b, self.bo_b,
-                self.Wxg_b, self.Whg_b, self.bg_b
-            )
-
-            backward_states.append(hb)
-
-        """
-        Reverse backward states to align with forward states.
-        """
-        backward_states.reverse()
-
-        outputs = []
-
-        """
-        Combine forward and backward hidden states.
-        """
-        for hf, hb in zip(forward_states, backward_states):
-
-            h = torch.cat([hf, hb], dim=1)
-
-            outputs.append(self.fc(h).unsqueeze(1))
-
-        """
-        Concatenate outputs across all timesteps.
-        """
-        logits = torch.cat(outputs, dim=1)
+        logits = self.fc(layer_input)
 
         return logits, None

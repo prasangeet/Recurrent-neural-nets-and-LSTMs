@@ -7,12 +7,11 @@ class ModelFactory:
 
     """
     Factory class to create different sequence models.
-
     This helps in selecting and initializing models based on a name string.
     """
 
     @staticmethod
-    def create(model_name, vocab_size, embed_size=64, hidden_size=128):
+    def create(model_name, vocab_size, embed_size=64, hidden_size=128, num_layers=1, dropout=0.0):
         """
         Create and return a model instance.
 
@@ -21,6 +20,8 @@ class ModelFactory:
             vocab_size: size of vocabulary
             embed_size: embedding dimension
             hidden_size: hidden state size
+            num_layers: number of stacked layers
+            dropout: dropout probability between layers
 
         Returns:
             initialized model
@@ -29,19 +30,23 @@ class ModelFactory:
         model_name = model_name.lower()
 
         """
-        Select model based on name.
+        Select and initialize the model based on the name string.
+        All models receive the same set of hyperparameters.
         """
         if model_name == "rnn":
-            return VanillaRNN(vocab_size, embed_size, hidden_size)
+            return VanillaRNN(vocab_size, embed_size, hidden_size, num_layers, dropout)
 
         elif model_name == "blstm":
-            return BLSTM(vocab_size, embed_size, hidden_size)
+            return BLSTM(vocab_size, embed_size, hidden_size, num_layers, dropout)
 
         elif model_name == "attention":
-            return AttentionRNN(vocab_size, embed_size, hidden_size)
+            return AttentionRNN(vocab_size, embed_size, hidden_size, num_layers, dropout)
 
         else:
             """
-            Raise error if model name is not recognized.
+            Raise an error if the model name isn't one we recognize.
             """
-            raise ValueError(f"Unknown model type: {model_name}")
+            raise ValueError(
+                f"Unknown model type: '{model_name}'. "
+                f"Expected one of: 'rnn', 'blstm', 'attention'."
+            )

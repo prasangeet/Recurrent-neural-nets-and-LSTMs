@@ -37,13 +37,22 @@ class NameDataModule:
         self.logger = logger
         self.vocab_size = None
 
-    def setup(self):
+    def setup(self, batch_size=None):
         """
         Run preprocessing and prepare dataloaders.
+
+        Args:
+            batch_size: optional override for the batch size set in __init__.
+                        Useful when running hyperparameter tuning across multiple runs.
 
         Returns:
             train_loader, val_loader, vocab_size
         """
+
+        """
+        Use the override if provided, otherwise fall back to the value from __init__.
+        """
+        effective_batch_size = batch_size if batch_size is not None else self.batch_size
 
         """
         Run preprocessing pipeline to get inputs and targets.
@@ -53,7 +62,6 @@ class NameDataModule:
             save_file=self.vocab_file,
             logger=self.logger
         )
-
         inputs, targets = pipeline.run()
 
         """
@@ -65,7 +73,6 @@ class NameDataModule:
         Create dataset.
         """
         dataset = NameDataset(inputs, targets)
-
         dataset_size = len(dataset)
 
         """
@@ -80,26 +87,26 @@ class NameDataModule:
         )
 
         """
-        Create dataloaders.
+        Create dataloaders using the effective batch size.
         """
         train_loader = DataLoader(
             train_dataset,
-            batch_size=self.batch_size,
+            batch_size=effective_batch_size,
             shuffle=True
         )
-
         val_loader = DataLoader(
             val_dataset,
-            batch_size=self.batch_size,
+            batch_size=effective_batch_size,
             shuffle=False
         )
 
         """
-        Log dataset split information.
+        Log dataset split and batch size so it shows up in the run log.
         """
         if self.logger:
             self.logger.info(
-                f"Dataset Split -> Train: {train_size} | Val: {val_size}"
+                f"Dataset Split -> Train: {train_size} | Val: {val_size} | "
+                f"Batch size: {effective_batch_size}"
             )
 
         return train_loader, val_loader, self.vocab_size

@@ -1,0 +1,10 @@
+2026-03-23 14:36:25,791 | INFO | Starting hyperparameter tuning pipeline
+2026-03-23 14:36:25,792 | INFO | Total configurations to try per model: 3
+2026-03-23 14:36:25,793 | INFO | 
+==================================================
+2026-03-23 14:36:25,793 | INFO | MODEL: Vanilla RNN
+2026-03-23 14:36:25,793 | INFO | ==================================================
+2026-03-23 14:36:25,793 | INFO | 
+  Run 1/3
+2026-03-23 14:36:25,793 | INFO |   Config: lr=0.001, hidden=128, layers=1, dropout=0.0, batch=64
+2026-03-23 14:36:25,932 | INFO | Using device: cuda
